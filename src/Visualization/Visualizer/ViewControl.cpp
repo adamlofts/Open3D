@@ -186,11 +186,11 @@ bool ViewControl::ConvertFromPinholeCameraParameters(
 
 ViewControl::ProjectionType ViewControl::GetProjectionType() const
 {
-    if (field_of_view_ == FIELD_OF_VIEW_MIN) {
+//    if (field_of_view_ == FIELD_OF_VIEW_MIN) {
         return ProjectionType::Orthogonal;
-    } else {
-        return ProjectionType::Perspective;
-    }
+//    } else {
+//        return ProjectionType::Perspective;
+//    }
 }
 
 void ViewControl::Reset()

@@ -245,7 +245,7 @@ bool SimpleShaderForTriangleMesh::PrepareRendering(const Geometry &geometry,
     } else {
         glEnable(GL_CULL_FACE);
     }
-    glEnable(GL_DEPTH_TEST);
+    glDisable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     if (option.mesh_show_wireframe_) {

@@ -97,7 +97,8 @@ bool SimpleShader::RenderGeometry(const Geometry &geometry,
         return false;
     }
 
-//    glDisable(GL_DEPTH_TEST);
+    glEnable(GL_DEPTH_TEST);
+    glDisable(GL_BLEND);
 //    glEnable(GL_CULL_FACE);
 //    glCullFace(GL_FRONT);
 //
@@ -271,8 +272,8 @@ bool SimpleShaderForTriangleMesh::PrepareRendering(const Geometry &geometry,
 //        glFrontFace(GL_CCW);
 
 //    }
-    glDisable(GL_DEPTH_TEST);
-    glDepthFunc(GL_ALWAYS);
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LESS);
     glPolygonMode(GL_FRONT, GL_FILL);
     if (option.mesh_show_wireframe_) {
         glEnable(GL_POLYGON_OFFSET_FILL);

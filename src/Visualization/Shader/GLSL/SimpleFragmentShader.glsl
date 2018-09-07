@@ -4,5 +4,5 @@ varying vec3 fragment_color;
 
 void main()
 {
-    gl_FragColor = vec4(fragment_color.y, 1 - fragment_color.y, 0, 0.2);
+    gl_FragColor = vec4(fragment_color, 1) ;//vec4(fragment_color.y, 1 - fragment_color.y, 0, 0.2);
 }

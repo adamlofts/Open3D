@@ -46,7 +46,7 @@ bool Visualizer::InitOpenGL()
     }
 
     // depth test
-    glDisable(GL_DEPTH_TEST);
+    glEnable(GL_DEPTH_TEST);
     glClearDepth(1.0f);
 
     // pixel alignment
@@ -69,15 +69,17 @@ void Visualizer::Render()
     view_control_ptr_->SetViewMatrices();
 
 //    glEnable(GL_MULTISAMPLE);
-    glEnable(GL_BLEND);
+    glDisable(GL_BLEND);
+    glDisable( GL_POLYGON_SMOOTH );
+    glDisable( GL_MULTISAMPLE );
 
-    glBlendEquationSeparate(GL_FUNC_ADD, GL_FUNC_ADD);
-    glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
+//    glBlendEquationSeparate(GL_FUNC_ADD, GL_FUNC_ADD);
+//    glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
 
     auto &background_color = render_option_ptr_->background_color_;
     glClearColor((GLclampf)background_color(0), (GLclampf)background_color(1),
             (GLclampf)background_color(2), 1.0f);
-    // glClearDepth(1.0f);
+     glClearDepth(1.0f);
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 

@@ -65,6 +65,7 @@ protected:
     GLuint vertex_color_;
     GLuint vertex_color_buffer_;
     GLuint MVP_;
+    GLuint u_;
 };
 
 class SimpleShaderForPointCloud : public SimpleShader

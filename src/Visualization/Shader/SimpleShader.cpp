@@ -46,6 +46,8 @@ bool SimpleShader::Compile()
     vertex_position_ = glGetAttribLocation(program_, "vertex_position");
     vertex_color_ = glGetAttribLocation(program_, "vertex_color");
     MVP_ = glGetUniformLocation(program_, "MVP");
+    u_ = glGetUniformLocation(program_, "u");
+
     return true;
 }
 
@@ -94,15 +96,40 @@ bool SimpleShader::RenderGeometry(const Geometry &geometry,
         PrintShaderWarning("Rendering failed during preparation.");
         return false;
     }
+
+//    glDisable(GL_DEPTH_TEST);
+//    glEnable(GL_CULL_FACE);
+//    glCullFace(GL_FRONT);
+//
+//    glUseProgram(program_);
+//    glUniformMatrix4fv(MVP_, 1, GL_FALSE, view.GetMVPMatrix().data());
+//    glUniform1f(u_, 1);
+//    glEnableVertexAttribArray(vertex_position_);
+//    glBindBuffer(GL_ARRAY_BUFFER, vertex_position_buffer_);
+//    glVertexAttribPointer(vertex_position_, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+//    glEnableVertexAttribArray(vertex_color_);
+//    glBindBuffer(GL_ARRAY_BUFFER, vertex_color_buffer_);
+//    glVertexAttribPointer(vertex_color_, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+
+
+
+    //glDrawArrays(draw_arrays_mode_, 0, draw_arrays_size_);
+
+    glDisable(GL_CULL_FACE);
+//    glCullFace(GL_BACK);
+
     glUseProgram(program_);
     glUniformMatrix4fv(MVP_, 1, GL_FALSE, view.GetMVPMatrix().data());
+    glUniform1f(u_, 0);
     glEnableVertexAttribArray(vertex_position_);
     glBindBuffer(GL_ARRAY_BUFFER, vertex_position_buffer_);
     glVertexAttribPointer(vertex_position_, 3, GL_FLOAT, GL_FALSE, 0, NULL);
     glEnableVertexAttribArray(vertex_color_);
     glBindBuffer(GL_ARRAY_BUFFER, vertex_color_buffer_);
     glVertexAttribPointer(vertex_color_, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+
     glDrawArrays(draw_arrays_mode_, 0, draw_arrays_size_);
+
     glDisableVertexAttribArray(vertex_position_);
     glDisableVertexAttribArray(vertex_color_);
     return true;
@@ -126,7 +153,6 @@ bool SimpleShaderForPointCloud::PrepareRendering(const Geometry &geometry,
         return false;
     }
     glPointSize(GLfloat(option.point_size_));
-    glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
     return true;
 }
@@ -193,7 +219,6 @@ bool SimpleShaderForLineSet::PrepareRendering(const Geometry &geometry,
         return false;
     }
     glLineWidth(1.0f);
-    glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
     return true;
 }
@@ -240,14 +265,15 @@ bool SimpleShaderForTriangleMesh::PrepareRendering(const Geometry &geometry,
         PrintShaderWarning("Rendering type is not TriangleMesh.");
         return false;
     }
-    if (option.mesh_show_back_face_) {
-        glDisable(GL_CULL_FACE);
-    } else {
-        glEnable(GL_CULL_FACE);
-    }
+//    if (option.mesh_show_back_face_) {
+//        glDisable(GL_CULL_FACE);
+//    } else {
+//        glFrontFace(GL_CCW);
+
+//    }
     glDisable(GL_DEPTH_TEST);
-    glDepthFunc(GL_LESS);
-    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    glDepthFunc(GL_ALWAYS);
+    glPolygonMode(GL_FRONT, GL_FILL);
     if (option.mesh_show_wireframe_) {
         glEnable(GL_POLYGON_OFFSET_FILL);
         glPolygonOffset(1.0, 1.0);

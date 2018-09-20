@@ -196,7 +196,7 @@ bool CoordinateFrameRenderer::Render(const RenderOption &option,
         const ViewControl &view)
 {
     if (is_visible_ == false || geometry_ptr_->IsEmpty()) return true;
-    if (option.show_coordinate_frame_ == false) return true;
+    /*if (option.show_coordinate_frame_ == false) */return true;
     const auto &mesh = (const TriangleMesh &)(*geometry_ptr_);
     return phong_shader_.Render(mesh, option, view);
 }

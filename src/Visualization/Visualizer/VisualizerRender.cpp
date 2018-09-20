@@ -73,8 +73,8 @@ void Visualizer::Render()
     glDisable( GL_POLYGON_SMOOTH );
     glDisable( GL_MULTISAMPLE );
 
-//    glBlendEquationSeparate(GL_FUNC_ADD, GL_FUNC_ADD);
-//    glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
+    glBlendEquationSeparate(GL_FUNC_ADD, GL_FUNC_ADD);
+    glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
 
     auto &background_color = render_option_ptr_->background_color_;
     glClearColor((GLclampf)background_color(0), (GLclampf)background_color(1),

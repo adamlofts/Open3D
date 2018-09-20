@@ -97,14 +97,23 @@ bool SimpleShader::RenderGeometry(const Geometry &geometry,
         return false;
     }
 
-    glEnable(GL_DEPTH_TEST);
-    glDisable(GL_BLEND);
+    bool is_pick_shader = !option.show_coordinate_frame_;
+
+    if (is_pick_shader) {
+      glEnable(GL_DEPTH_TEST);
+      glDisable(GL_BLEND);
+      glUniform1f(u_, 0);
+    } else {
+      glDisable(GL_DEPTH_TEST);
+      glEnable(GL_BLEND);
+      glUniform1f(u_, 1);
+    }
 //    glEnable(GL_CULL_FACE);
 //    glCullFace(GL_FRONT);
 //
 //    glUseProgram(program_);
 //    glUniformMatrix4fv(MVP_, 1, GL_FALSE, view.GetMVPMatrix().data());
-//    glUniform1f(u_, 1);
+
 //    glEnableVertexAttribArray(vertex_position_);
 //    glBindBuffer(GL_ARRAY_BUFFER, vertex_position_buffer_);
 //    glVertexAttribPointer(vertex_position_, 3, GL_FLOAT, GL_FALSE, 0, NULL);
@@ -121,7 +130,6 @@ bool SimpleShader::RenderGeometry(const Geometry &geometry,
 
     glUseProgram(program_);
     glUniformMatrix4fv(MVP_, 1, GL_FALSE, view.GetMVPMatrix().data());
-    glUniform1f(u_, 0);
     glEnableVertexAttribArray(vertex_position_);
     glBindBuffer(GL_ARRAY_BUFFER, vertex_position_buffer_);
     glVertexAttribPointer(vertex_position_, 3, GL_FLOAT, GL_FALSE, 0, NULL);
